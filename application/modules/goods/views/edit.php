@@ -1,0 +1,270 @@
+<div class="row">
+    <div class="col-md-12">
+        <a href="/admin/<?= $module ?>">
+            <button type="button" class="btn btn-default btn-default"><span class='glyphicon glyphicon-step-backward'></span> Назад к списку</button>
+        </a>
+    </div>
+</div>
+<div class="page-header">
+    <h2>Редактирование модуля "<?= $module_name ?>"</h2>
+</div>
+<?= form_open_multipart('admin/' . $module . '/edit/' . $entry['id']) ?>
+<div class="row" style="margin-bottom: 10px;">
+    <div class="col-md-12">
+        <button type="submit" class="btn btn-default">Сохранить</button>
+    </div>
+</div>
+<div class="row" style="margin-bottom: 5px;">
+    <div class="col-md-12">
+        <?= validation_errors(); ?>
+        <?php
+        if ($this->session->userdata('error')) {
+            echo $this->session->userdata('error');
+        }
+        $this->session->unset_userdata('error');
+        ?>
+    </div>
+</div>
+    <script type="text/javascript">
+
+
+        function getAttr(id, attrs)
+        {
+            $.ajax({
+                type: "POST",
+                url: "/getAttrAjax/",
+                data: 'id=' + id,
+                success: function (data) {
+                    console.log("it's attr: " + data);
+                    $elem = $('#attr');
+                    var attr = $.parseJSON(data);
+                    $elem.empty();
+                    if (id == $('#category').attr('current'))
+                        for (i = 0; i < attr.length; i++)
+                        {
+
+                            $elem.append(
+                                    "<div class='form-group'>" +
+                                    "<label for=attr'" + attr[i].id + "'>" + attr[i].name + "</lable>" +
+                                    "<input type='text' class='form-control' name='attr[" + attr[i].id + "]' id='attr'" + attr[i].id + "' value = " + attrs[i] + ">" +
+                                    "</div>"
+                                    );
+                        }
+                    else
+                        for (i = 0; i < attr.length; i++)
+                        {
+
+                            $elem.append(
+                                    "<div class='form-group'>" +
+                                    "<label for=attr'" + attr[i].id + "'>" + attr[i].name + "</lable>" +
+                                    "<input type='text' class='form-control' name='attr[" + attr[i].id + "]' id='attr'" + attr[i].id + "'>" +
+                                    "</div>"
+                                    );
+                        }
+                }
+            })
+        }
+
+        function getCategories()
+        {
+            $.ajax({
+                type: "POST",
+                url: "/getCategoriesAjax/",
+                success: function (data)
+                {
+                    var categories = $.parseJSON(data);
+                    var $select = $('#category');
+                    console.log(categories);
+                    for (i = 0; i < categories.length; i++)
+                        if (categories[i].id ==<?= $entry['subcategory_id'] ?>)
+                            $select.append("<option selected value='" + categories[i].id + "'>" + categories[i].text + "</option>");
+                        else
+                            $select.append("<option value='" + categories[i].id + "'>" + categories[i].text + "</option>");
+                }
+            })
+        }
+
+        function getSubCategories()
+        {
+            $.ajax({
+                type: "POST",
+                url: "/getSubCategoriesAjax/",
+                success: function (data)
+                {
+                    var subCategories = $.parseJSON(data);
+                    var $select = $('#category');
+                    console.log(subCategories);
+                    for (i = 0; i < subCategories.length; i++)
+                        if (subCategories[i].id == <?= $entry['subcategory_id'] ?>)
+                        {
+                            $select.append("<option selected category='" + subCategories[i].category_id + "' value='" + subCategories[i].id + "'>" + subCategories[i].text + "</option>");
+                            $select.attr('current', subCategories[i].category_id);
+                        }
+                        else
+                            $select.append("<option category='" + subCategories[i].category_id + "' value='" + subCategories[i].id + "'>" + subCategories[i].text + "</option>");
+                }
+            })
+        }
+
+        $(function () {
+
+
+            var url = '/admin/' + '<?= $module ?>' + '/images_upload/' + '<?= $entry['id'] ?>';
+            $("#upload_image").imageUpload(url, {
+                uploadButtonText: "Добавить",
+                previewImageSize: 150,
+                onSuccess: function (response) {
+                    $.ajax(
+                            {
+                                url: '/admin/<?= $module ?>/get_images/' + '<?= $entry['id'] ?>',
+                                type: 'POST',
+                                data: {
+                                },
+                                error: function () {
+                                    console.log('Ошибка');
+                                },
+                                success: function (data) {
+                                    $('.images_group').html(data)
+                                    image_del_click_subscription('<?= $module ?>');
+                                }
+                            });
+                }
+            });
+            $.ajax({
+                url: '/admin/<?= $module ?>/get_images/' + '<?= $entry['id'] ?>',
+                type: 'POST',
+                data: {
+                },
+                error: function () {
+                    console.log('Ошибка');
+                },
+                success: function (data) {
+                    $('.images_group').html(data)
+                    image_del_click_subscription('<?= $module ?>');
+                }
+            });
+
+
+            var attrs = new Array();
+            <?php foreach ($attrs as $attr): ?>
+                attrs.push("<?= $attr['value'] ?>");
+            <?php endforeach; ?>
+            console.log("subcategory id: " + "<?= $entry['subcategory_id'] ?>");
+            getSubCategories();
+            $("#category").bind({
+                blur: function ()
+                {
+                    console.log("Selected " + $(this).val());
+                },
+                change: function ()
+                {
+                    console.log("Selected " + $(this).children(":checked").text());
+                    id = $(this).children(":checked").attr('category');
+                    getAttr(id, attrs);
+                }
+            });
+        })
+    </script>
+<div class="row">
+
+    <!-- form for select -->
+
+    
+<div class="col-md-6">
+    <div class="form-group">
+        <label for="name">Название</label>
+        <input required name='name' value="<?= $entry['name'] ?>" type="text" class="form-control" placeholder="">
+    </div>
+    <div class="form-group">
+        <label for="url">ЧПУ</label>
+        <input name='url' value="<?= $entry['url'] ?>" type="text" class="form-control" id="url" placeholder="">
+    </div>
+    <div class="form-group">
+        <label for="category">Выберите подкатегорию</label>
+        <select class="form-control" id="category" name="subcategory"></select>
+    </div>
+    <div class="form-group">
+        <label for="title">Цена</label>
+        <input name='price' value="<?= $entry['price'] ?>" type="text" class="form-control" id="price" placeholder="">
+    </div>
+    <div class="checkbox">
+        <label>
+            <input name='active' <?php
+            if ($entry['active'] == 'on') {
+                echo 'checked';
+            }
+            ?> type="checkbox"> Активен
+        </label>
+    </div>
+    <div class="form-group">
+        <label for="image">Главное изображение</label><br/>
+        <div class="well">
+            <a class="main_image" href="/images/<?= $module ?>/<?= $entry['imageBg'] ?>">
+                <img width="200px" style="border: 1px solid black; background-color: grey;" src="/images/<?= $module ?>/<?= $entry['imageBg'] ?>">
+            </a>
+        </div>
+        <input name='imageBg' type="file" class="btn-file" id="image">
+        <p class="help-block">Выберите главное фото</p>
+    </div>
+    <div class="form-group">
+        <label for="image">Маленькое Изображение</label><br/>
+        <div class="well">
+            <a class="main_image" href="/images/<?= $module ?>/<?= $entry['imageSm'] ?>">
+                <img width="200px" style="border: 1px solid black; background-color: grey;" src="/images/<?= $module ?>/<?= $entry['imageSm'] ?>">
+            </a>
+        </div>
+        <input name='imageSm' type="file" class="btn-file" id="image">
+        <p class="help-block">Выберите дополнительное фото</p>
+    </div>
+</div>
+<div class="col-md-6">
+    <div id='attr'>
+        <?php if (!empty($attrs)): ?>
+            <?php foreach ($attrs as $attr): ?>
+                <div class='form-group'>
+                    <label for=attr'"+attr[i].id+"'><?= $attr['name'] ?></lable>
+                    <input type='text' class='form-control' name='attr[<?= $attr['attr_id'] ?>]' value="<?= $attr['value'] ?>">
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+    <div class="form-group">
+        <label for="metatitle">Мета title</label>
+        <input name='metatitle' value="<?= $entry['metatitle'] ?>" type="text" class="form-control" id="metatitle" placeholder="">
+    </div>
+    <div class="form-group">
+        <label for="desc">Мета description</label>
+        <textarea name='desc' rows="5" class="form-control" id="desc" placeholder=""><?= $entry['desc'] ?></textarea>
+    </div>
+    <div class="form-group">
+        <label for="keyw">Мета keywords</label>
+        <textarea name='keyw' rows="3" class="form-control" id="keyw" placeholder=""><?= $entry['keyw'] ?></textarea>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <label for="text">Картинки</label>
+        <div class="alert alert-info" role="alert">
+            <div id="upload_image"></div>
+        </div>
+        <div class="images_group"></div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="text">Информация об товаре</label>
+            <textarea name="text" id="text" rows="30">
+                <?= $entry['text'] ?>
+            </textarea>
+        </div>
+        <script>
+            CKEDITOR.replace('text');
+        </script>
+    </div>
+</div>
+<div class="row" style="margin-top: 10px;">
+    <div class="col-md-12">
+        <input type="hidden" name="do" value="<?= $module ?>Edit">
+        <button type="submit" class="btn btn-default">Сохранить</button>
+    </div>    
+</div>
+<?php form_close(); ?>

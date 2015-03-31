@@ -1,0 +1,1 @@
+<?= Modules::run('toursbuy/view') ?>
