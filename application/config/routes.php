@@ -71,11 +71,11 @@ $route['admin/(:any)'] = 'admin/view/$1';
 $route['admin'] = 'admin/view/main';
 
 //~~~~~~~~~~~~~~~~~~~~~~front routes~~~~~~~~~~~~~~~~~~~~~
+$route['tours/(:any)'] = 'front/tour/$1';
 
 $route['getCategoriesAjax'] = 'goods/getCategoriesAjax';
 $route['getSubCategoriesAjax'] = 'goods/getSubCategoriesAjax';
 $route['getAttrAjax']  = 'goods/getAttrAjax';
-$route['feedback/save'] = 'feedback/save';
 $route['news/(:any)'] = 'front/onenew/$1';
 $route['blog/(:any)'] = 'front/post/$1';
 $route['vises/(:any)'] = 'front/vises/$1';

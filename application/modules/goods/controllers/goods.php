@@ -366,7 +366,8 @@ class Goods extends MX_Controller {
                         } else {
                             $image = $namef;
                             $this->model->images_insert($image, $hotel_id);
-                            echo 'Файл "' . $_FILES['file']['name'][$k] . '" успешно загружен';
+                            echo 'Файл "' . $_FILES['file']['name'][$k] . '" успешно загружен
+';
                         }
                     }
                 }

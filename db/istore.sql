@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.10.6
+-- version 4.0.10
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Мар 31 2015 г., 08:18
--- Версия сервера: 5.5.41-log
--- Версия PHP: 5.4.35
+-- Время создания: Мар 28 2015 г., 17:29
+-- Версия сервера: 5.5.38-log
+-- Версия PHP: 5.3.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -282,31 +282,24 @@ DROP TABLE IF EXISTS `feedback`;
 CREATE TABLE IF NOT EXISTS `feedback` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `message` text NOT NULL,
+  `text` text NOT NULL,
   `date` datetime NOT NULL,
   `ip` varchar(255) NOT NULL,
   `read` varchar(2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Дамп данных таблицы `feedback`
 --
 
-INSERT INTO `feedback` (`id`, `name`, `email`, `message`, `date`, `ip`, `read`) VALUES
-(2, '12312311', '123@123.ru', '1', '2014-12-02 00:00:00', '127.0.0.1', 'on'),
-(4, '1', '123@123.ru', '1', '2014-12-03 12:59:41', '127.0.0.1', 'on'),
-(5, 'Андрей Федотов', 'protected.for@gmail.com', 'выфвфы', '2014-12-14 19:49:12', '127.0.0.1', 'on'),
-(6, 'Nurtai Atahanov', '3n_david@mail.ru', 'Здравствуйте ! Посоветуйте куда лучше поехать в Таиланд  или в Турцию если есть другие варианты тоже посмотрю, какие документы должен собрать и должен ли заключить договор с Вашей фирмой?? Спасибо!!!', '2015-01-13 11:38:03', '158.181.156.83', 'on'),
-(7, 'sdfg', 'dsfgsdfg@gmail.com', '0', '2015-03-30 19:32:30', '127.0.0.1', '0'),
-(8, 'Нурсултан', 'protected.for@gmail.com', '0', '2015-03-30 19:36:04', '127.0.0.1', 'on'),
-(9, 'dfgdfsg', 'sdfgdfsgdfg@gmail.com', '0', '2015-03-30 19:37:21', '127.0.0.1', 'on'),
-(10, 'sdflkjskdfjk', 'fjdklsdjf@sdfjk.com', '0', '2015-03-30 19:41:41', '127.0.0.1', 'on'),
-(11, 'fhfh', 'fghfgh@fgfd.cod', 'sdafsdafsadfsadf', '2015-03-30 19:45:19', '127.0.0.1', 'on'),
-(12, 'Nursultan', 'nursultan@gmail.com', 'sdfgdfsgdfsgdfsg', '2015-03-30 19:50:44', '127.0.0.1', '0'),
-(13, 'sdfsd', 'fsdf@fgfsdf.sdfsdf', 'fgdfgdfgfdg', '2015-03-30 19:51:53', '127.0.0.1', '0'),
-(14, 'sdfsdf', 'sdfsdf@gmail.com', 'fsadfsdfsdf', '2015-03-30 19:52:39', '127.0.0.1', '0');
+INSERT INTO `feedback` (`id`, `name`, `phone`, `email`, `text`, `date`, `ip`, `read`) VALUES
+(2, '12312311', '1', '123@123.ru', '1', '2014-12-02 00:00:00', '127.0.0.1', 'on'),
+(4, '1', '1', '123@123.ru', '1', '2014-12-03 12:59:41', '127.0.0.1', 'on'),
+(5, 'Андрей Федотов', '+996554709700', 'protected.for@gmail.com', 'выфвфы', '2014-12-14 19:49:12', '127.0.0.1', 'on'),
+(6, 'Nurtai Atahanov', '0777930103', '3n_david@mail.ru', 'Здравствуйте ! Посоветуйте куда лучше поехать в Таиланд  или в Турцию если есть другие варианты тоже посмотрю, какие документы должен собрать и должен ли заключить договор с Вашей фирмой?? Спасибо!!!', '2015-01-13 11:38:03', '158.181.156.83', 'on');
 
 -- --------------------------------------------------------
 
@@ -324,7 +317,7 @@ CREATE TABLE IF NOT EXISTS `feedback_email` (
 --
 
 INSERT INTO `feedback_email` (`email`) VALUES
-('ariy.markson@gmail.com');
+('tour@travelshop.kg');
 
 -- --------------------------------------------------------
 
@@ -341,7 +334,7 @@ CREATE TABLE IF NOT EXISTS `goods` (
   `subcategory_id` int(11) NOT NULL,
   `imageBg` varchar(255) NOT NULL COMMENT 'required',
   `imageSm` varchar(255) NOT NULL,
-  `text` text NOT NULL,
+  `text` varchar(255) NOT NULL,
   `order` int(11) NOT NULL COMMENT 'not required',
   `active` varchar(2) NOT NULL COMMENT 'not required',
   `metatitle` varchar(255) NOT NULL COMMENT 'not required',
@@ -349,17 +342,17 @@ CREATE TABLE IF NOT EXISTS `goods` (
   `keyw` text NOT NULL COMMENT 'not required',
   PRIMARY KEY (`id`),
   UNIQUE KEY `url` (`url`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
 
 --
 -- Дамп данных таблицы `goods`
 --
 
 INSERT INTO `goods` (`id`, `name`, `url`, `price`, `subcategory_id`, `imageBg`, `imageSm`, `text`, `order`, `active`, `metatitle`, `desc`, `keyw`) VALUES
-(23, 'MacBook Air', 'macbook-air', '12345', 61, '9859c3f58f613028013dc4ec5929c714.png', '8ec61cf2dcbc1acf513efbe9c68e2506.png', '<p><span style="color:rgb(64, 64, 64); font-family:lucida grande,lucida sans unicode,helvetica,arial,verdana,sans-serif; font-size:16.0007991790772px">11-дюймовый MacBook Air теперь работает без подзарядки до 9 часов, а 13-дюймовый &mdash; до 12 часов. Вы можете выпить свой утренний кофе и отправиться на работу &mdash; провода не понадобятся вам до самого вечера. А когда захочется отдохнуть, вы сможете смотреть фильмы в iTunes до 10 часов на 11-дюймовой модели и до 12 часов на 13-дюймовой. </span></p>\r\n\r\n<p><span style="color:rgb(64, 64, 64); font-family:lucida grande,lucida sans unicode,helvetica,arial,verdana,sans-serif; font-size:16.0007991790772px">MacBook Air работает в режиме ожидания до 30 дней &mdash; вы можете оставить его на несколько недель и вернуться к работе с того места, на котором остановились, словно вы никуда не уезжали.</span></p>\r\n', 0, 'on', '', '', ''),
-(24, 'iPad Air Black', 'ipad-air-black', '45435', 62, '05c39994ee385ad60347dd92de5dfb44.jpg', 'a48c8ae78c834ab221ad3716e873fb66.png', '<p>sagfdsgfdsgdhfgh</p>\r\n\r\n<p>jsdfkjsdfjksdjf</p>\r\n\r\n<p>dfgjkdfjglkjdfklg</p>\r\n', 0, 'on', '', '', ''),
-(25, 'iPhone 6 Plus', 'iphone-6-plus', '555555', 64, 'dee0ad9516574dcd5f8e44d03dc4c5f1.png', '793dcbc497ed011caa90a09176edea4d.png', '<p>gdfgfdg</p>\r\n\r\n<p>dfgdfgdf</p>\r\n\r\n<p>dfgdfgdfg</p>\r\n', 0, 'on', '', '', ''),
-(26, 'iPod nano 7', 'ipod-nano-7', '567567', 65, '562f5c9bae1b4f14e85b59608121a623.png', 'c140100ef8a06bdd591837ff4d06f0d0.png', '<p>iPod nano 7th generation</p>\r\n\r\n<p>It&#39;s very cool</p>\r\n\r\n<p>I like it!</p>\r\n', 0, 'on', '', '', '');
+(19, 'iPhone6 Plus', 'iphone6-plus', '125', 57, 'cee9737259758d6c1ddddb0af8706807.jpg', '96a2a804fe7a43ee8bfaad6a555673d1.jpg', '<p>This short text about iPhone6+</p>\r\n\r\n<p>This is block of description</p>\r\n\r\n<p>This is block of description</p>\r\n', 1, 'on', 'asd', 'asd', 'asd'),
+(20, 'iPhone6s', 'iphone6s', '900', 60, '03b44721d7b5c23f293574de164b21d4.jpg', '7b51773d855b53a2715b8fe757294c04.jpg', '<p>0</p>\r\n', 0, 'on', 'Meta title', '', ''),
+(21, 'iMac M290X Retina Display 5K - 27inch"', 'imac-m290x-retina-display-5k---27inch', '567', 57, '474f73525c016325976ededfc0cf4092.jpg', '0d5b647d3f9fbce8b7b22afd769d90f2.jpg', '0', 0, 'on', '', '', ''),
+(22, 'iPad MIni 3', 'ipad-mini-3', '1235', 57, 'dc1bddd5209730ed2c0db2cf9913218c.jpeg', '302b140f44efde862561597c8e772913.png', '<p>This is nice good</p>\r\n\r\n<p>I&#39;m very like it</p>\r\n\r\n<p>Buy it!</p>\r\n', 0, 'on', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -374,7 +367,7 @@ CREATE TABLE IF NOT EXISTS `goods_images` (
   `order` int(11) NOT NULL,
   `good_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=191 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=179 ;
 
 --
 -- Дамп данных таблицы `goods_images`
@@ -396,19 +389,7 @@ INSERT INTO `goods_images` (`id`, `image`, `order`, `good_id`) VALUES
 (173, '1427465226_a3b99d4cb16b2f2413d0b82df1e15459.JPG', 0, 19),
 (174, '1427465226_6fba1c39bd01354438fcdfdc2007f025.JPG', 0, 19),
 (177, '1427465226_6e4ff53aa30329ffb559918c43eb5bf4.jpg', 0, 19),
-(178, '1427465226_ca70e23c89013437c645e332176a55ae.JPG', 0, 19),
-(179, '1427709989_944589ed9647517414070af93c102670.png', 0, 23),
-(180, '1427709989_9f39515f195f59ce74f652ccf348e1a2.png', 0, 23),
-(181, '1427709989_87594a0208c8427b05d838c88cea6c3f.png', 0, 23),
-(182, '1427709989_00bf13f3eb5197266fe0f3c463e1925d.png', 0, 23),
-(183, '1427709989_814e7e9ba924caf747f87f8d874a2e96.png', 0, 23),
-(184, '1427710407_f8deed631db7c86151618c5b77a20b7a.png', 0, 24),
-(185, '1427710407_8e3e4648c5b5022cbd3f8e2b50a8c186.jpg', 0, 24),
-(186, '1427710407_01806ea08c2ce03df2aba26c8f67e566.png', 0, 24),
-(187, '1427710407_cf8f3b9ff0684a2a19207c9b65c423b9.jpg', 0, 24),
-(188, '1427712417_862a46aef6af47c581a7fe0233cea3b6.jpg', 0, 26),
-(189, '1427712417_fb39728a68ee0d1b4f511d2b471ffe08.jpg', 0, 26),
-(190, '1427712417_a520af702541a70bccda221ed20fa445.png', 0, 26);
+(178, '1427465226_ca70e23c89013437c645e332176a55ae.JPG', 0, 19);
 
 -- --------------------------------------------------------
 
@@ -439,11 +420,7 @@ INSERT INTO `good_attr_value` (`good_id`, `attr_id`, `value`) VALUES
 (19, 11, '335'),
 (20, 9, 'dfgdfg'),
 (20, 10, 'dfgdfg'),
-(20, 11, 'dfgdfg'),
-(23, 9, 'OS X Yosemite'),
-(23, 10, 'Intel Core i7'),
-(23, 11, '125 Гц'),
-(26, 7, '');
+(20, 11, 'dfgdfg');
 
 -- --------------------------------------------------------
 
@@ -823,40 +800,17 @@ CREATE TABLE IF NOT EXISTS `subcategories` (
   `keyw` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `url` (`url`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=66 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=61 ;
 
 --
 -- Дамп данных таблицы `subcategories`
 --
 
 INSERT INTO `subcategories` (`id`, `text`, `image`, `order`, `active`, `url`, `category_id`, `title`, `desc`, `keyw`) VALUES
-(61, 'MacBook', '35f4758435e4f4829ad54775bf64ddee.png', 0, 'on', 'macbook', 56, 'MacBook', 'MacBook', 'MacBook'),
-(62, 'iPad Air', '0d0f16beef922a27ae432505e531a116.png', 0, 'on', 'ipad-air', 57, 'iPad', 'iPad', 'iPad'),
-(64, 'iPhone6', 'f407d1c3d934716b1834204efae2900f.png', 0, 'on', 'iphone6', 58, 'iphone6', 'iphone6', 'iphone6'),
-(65, 'iPod nano', 'c3fcd6ba9354a97a00575fa9fce4e5f4.png', 0, 'on', 'ipod-nano', 59, '', '', '');
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `subcategories_images`
---
-
-DROP TABLE IF EXISTS `subcategories_images`;
-CREATE TABLE IF NOT EXISTS `subcategories_images` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `image` varchar(255) NOT NULL,
-  `order` int(11) NOT NULL,
-  `subcategory_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
-
---
--- Дамп данных таблицы `subcategories_images`
---
-
-INSERT INTO `subcategories_images` (`id`, `image`, `order`, `subcategory_id`) VALUES
-(1, '1427776786_f086a4426abf95fed4e7ae933c127c21.png', 0, 65),
-(2, '1427776786_ec26b579e3186f0e6874acb5fb42260e.png', 0, 65);
+(56, 'iPhone6', 'e4af31a1fd60723c101cb2c6d9b6c106.jpg', 0, 'on', 'iphone6', 57, 'this is iPhone6', 'this is iPhone6', '123'),
+(57, 'iPad', 'fe86344fc737cfa2bb70cc4913d5e8e1.png', 0, 'on', 'ipad', 56, '', '', ''),
+(59, 'iPod', '2cc76eb56641f59c34355658b61e061a.jpg', 0, 'on', 'ipod', 57, '', '', ''),
+(60, 'iPod mini', 'fd8f336e3757f8cd73e16c0c11305c7c.jpg', 0, 'on', 'ipod-mini', 59, 'This is iPod mini', 'It''s iPod mini baby!', 'sdsg');
 
 -- --------------------------------------------------------
 
