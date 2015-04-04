@@ -77,6 +77,15 @@
         
     </div>
 </div>
+<div class="row">
+    <div class="col-md-12">
+        <label for="text">Картинки</label>
+        <div class="alert alert-info" role="alert">
+            <div id="upload_image"></div>
+        </div>
+        <div class="images_group"></div>
+    </div>
+</div>
 <div class="row" style="margin-top: 10px;">
     <div class="col-md-12">
         <input type="hidden" name="do" value="<?= $module ?>Edit">
@@ -84,3 +93,42 @@
     </div>    
 </div>
 <?form_close(); ?>
+
+<script>
+    $(function(){
+        var url = '/admin/' + '<?= $module ?>' + '/images_upload/' + '<?= $entry['id'] ?>';
+        $("#upload_image").imageUpload(url, {
+            uploadButtonText: "Добавить",
+            previewImageSize: 150,
+            onSuccess: function (response) {
+                $.ajax(
+                        {
+                            url: '/admin/<?= $module ?>/get_images/' + '<?= $entry['id'] ?>',
+                            type: 'POST',
+                            data: {
+                            },
+                            error: function () {
+                                console.log('Ошибка');
+                            },
+                            success: function (data) {
+                                $('.images_group').html(data);
+                                image_del_click_subscription('<?= $module ?>');
+                            }
+                        });
+            }
+        });
+        $.ajax({
+            url: '/admin/<?= $module ?>/get_images/' + '<?= $entry['id'] ?>',
+            type: 'POST',
+            data: {
+            },
+            error: function () {
+                console.log('Ошибка');
+            },
+            success: function (data) {
+                $('.images_group').html(data)
+                image_del_click_subscription('<?= $module ?>');
+            }
+        });
+    })
+</script

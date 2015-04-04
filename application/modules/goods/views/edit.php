@@ -251,7 +251,7 @@
     </div>
     <div class="col-md-12">
         <div class="form-group">
-            <label for="text">Информация об отеле</label>
+            <label for="text">Информация об товаре</label>
             <textarea name="text" id="text" rows="30">
                 <?= $entry['text'] ?>
             </textarea>

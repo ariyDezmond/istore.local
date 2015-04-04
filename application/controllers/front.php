@@ -44,33 +44,44 @@ class Front extends MX_Controller {
         $cat = Modules::run('categories/get_by_url', $catUrl);
         if($cat)
         {
-            $goods = Modules::run('goods/getBySubCatUrl',$subCatUrl);
-            if($goods)
+            $subCat = Modules::run('subcategories/get_by_url',$subCatUrl);
+            if($subCat)
             {
-                foreach($goods as &$good)
+                $images = Modules::run('subcategories/get_images',$subCat['id'],true);
+                /*var_dump($images);die;*/
+                $goods = Modules::run('goods/getBySubCatUrl',$subCatUrl);
+                if($goods)
                 {
-                    $good['subcategory_name'] = Modules::run('goods/getSubCatNameById',$good['subcategory_id']);
+                    foreach($goods as &$good)
+                    {
+                        $good['subcategory_name'] = Modules::run('goods/getSubCatNameById',$good['subcategory_id']);
+                    }
+                    $data['title'] = "Товары";
+                    $data['catUrl'] = $catUrl;
+                    $data['subCatUrl'] = $subCatUrl;
+                    $data['entries'] = $goods;
+                    $data['images'] = $images;
+                    $this->load->view('templates/metahead', $data);
+                    $this->load->view('templates/head', $data);
+                    $this->load->view('pages/goods', $data);
+                    $this->load->view('templates/footer', $data);
                 }
-                $data['title'] = "Товары";
-                $data['catUrl'] = $catUrl;
-                $data['subCatUrl'] = $subCatUrl;
-                $data['entries'] = $goods;
-                $this->load->view('templates/metahead', $data);
-                $this->load->view('templates/head', $data);
-                $this->load->view('pages/goods', $data);
-                $this->load->view('templates/footer', $data);
+                else
+                {
+                    $data['title'] = "Товары";
+                    $data['catUrl'] = $catUrl;
+                    $data['subCatUrl'] = $subCatUrl;
+                    $data['entries'] = $goods;
+                    $this->load->view('templates/metahead', $data);
+                    $this->load->view('templates/head', $data);
+                    $this->load->view('pages/goods', $data);
+                    $this->load->view('templates/footer', $data);
+                }
             }
             else
             {
-                $data['title'] = "Товары";
-                $data['catUrl'] = $catUrl;
-                $data['subCatUrl'] = $subCatUrl;
-                $data['entries'] = $goods;
-                $this->load->view('templates/metahead', $data);
-                $this->load->view('templates/head', $data);
-                $this->load->view('pages/goods', $data);
-                $this->load->view('templates/footer', $data);
-            }
+                show_404();
+            }                                                                                 
         }
         else
         {
