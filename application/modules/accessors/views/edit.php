@@ -8,7 +8,7 @@
                 url  : "/getCategoriesAccessorsAjax/",
                 success : function(data)
                 {
-                    //console.log(data);
+                    console.log(data);
                     var categories = $.parseJSON(data);
                     var $select = $('#category');
                     
@@ -27,6 +27,7 @@
         }
 
     $(function () {
+        getCategories();
         var url = '/admin/' + '<?= $module ?>' + '/images_upload/' + '<?= $entry['id'] ?>';
         $("#upload_image").imageUpload(url, {
             uploadButtonText: "Добавить",

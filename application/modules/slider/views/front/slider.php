@@ -1,3 +1,4 @@
+<?php if($entries):?>
 <!-- slider -->
 <div class="slider">
    <!-- container -->
@@ -7,34 +8,14 @@
 
          <!-- Wrapper for slides -->
          <div class="carousel-inner" role="listbox">
-
-            <div class="item active">
-               <a href="#"><img src="/img/slider_img.png" alt="iPhone"></a>
+         <?php foreach($entries as $key=>$entry):?>
+            <div class="item<?php if($key==0):?> active<?php endif;?>">
+               <a href="#"><img src="/images/slider/<?=$entry['image']?>" alt="<?=$entry['text']?>"></a>
                <div class="carousel-caption">
-                  <h3><a href="#">iPhone6</a></h3>
+                  <h3><a href="#"><?=$entry['text']?></a></h3>
                </div>
             </div><!-- item end -->
-
-            <div class="item">
-               <a href="#"><img src="/img/slider_img.png" alt="iPhone"></a>
-               <div class="carousel-caption">
-                  <h3><a href="#">iPad</a></h3>
-               </div>
-            </div><!-- item end -->
-
-            <div class="item">
-               <a href="#"><img src="/img/slider_img.png" alt="iPhone"></a>
-               <div class="carousel-caption">
-                  <h3><a href="#">Mac</a></h3>
-               </div>
-            </div><!-- item end -->
-
-            <div class="item">
-               <a href="#"><img src="/img/slider_img.png" alt="iPhone"></a>
-               <div class="carousel-caption">
-                  <h3><a href="#">iPad</a></h3>
-               </div>
-            </div><!-- item end -->
+         <?php endforeach;?>
 
          </div>
           <!-- Wrapper for slides -->
@@ -53,3 +34,4 @@
       </div><!-- #myCarousel end -->
    </div><!-- container end -->
 </div><!-- slider end -->
+<?php endif;?>

@@ -65,10 +65,16 @@
                     <li><a href="/news/">Статьи</a></li>
                     <li><a href="/contacts/">Контакты</a></li>
                     <li>
-                      <form action="#" role="search">
-                        <input type="submit" value="" class="search-submit">
+                      
                         <input type="search" name="search_text" class="search-text" placeholder="Поиск..." autocomplete="off">
-                      </form>
+                        <script>
+                          $(function(){
+                            $('.search-text').keypress(function(key){
+                              if(key.keyCode==13)
+                                location.href='/search/'+$(this).val();
+                            });
+                          });
+                        </script>
                      </li>
                 </ul><!-- ul.nav end -->
             </div>

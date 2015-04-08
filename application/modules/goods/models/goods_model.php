@@ -290,4 +290,16 @@ class Goods_model extends CI_Model {
         $this->db->update($this->images_table, $data);
     }
 
+    public function getSubCategoryBy($param)
+    {
+        $query = $this->db->get_where('subcategories',$param);
+        return $query->row_array();
+    }
+
+    public function getCategoryBy($param)
+    {
+        $query = $this->db->get_where('categories',$param);
+        return $query->row_array();
+    }
+
 }

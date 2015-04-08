@@ -333,4 +333,18 @@ class Front extends MX_Controller {
         $this->load->view('templates/footer', $data);
     }
 
+     public function search($q) 
+     {
+        $query=Modules::run('search/query',$q);
+        $data['res'] = $query;
+        $data['title'] = 'Результаты поиска: ' . urldecode($query);
+        $this->load->view('front/templates/metahead', $data);
+        $this->load->view('front/templates/header', $data);
+        $this->load->view('front/templates/sub-menu', $data);
+        $this->load->view('front/pages/search', $data);
+        $this->load->view('front/templates/footer', $data);
+     }
+
+    
+
 }

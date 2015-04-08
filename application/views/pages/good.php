@@ -34,6 +34,7 @@
       <!-- container -->
       <div class="container">
          <!-- #myCarousel -->
+         <?php if ($this->session->userdata('logged')):?><button type="button" class="btn btn-default" onclick="location.href = '/admin/goods/edit/<?=$entry['id']?>'">Править</button><?php endif;?>
          <div id="myCarousel" class="carousel slide" data-ride="carousel">
             
             <!-- Wrapper for slides -->

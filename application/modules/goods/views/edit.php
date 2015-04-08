@@ -225,8 +225,11 @@
 </div>
 <?= form_open_multipart('admin/' . $module . '/edit/' . $entry['id']) ?>
 <div class="row" style="margin-bottom: 10px;">
-    <div class="col-md-12">
+    <div class="col-md-6">
         <button type="submit" class="btn btn-default">Сохранить</button>
+    </div>
+    <div class="col-md-6">
+        <button type="button" class="btn btn-default" onclick="location.href = '/<?=$category['url']?>/<?=$subcategory['url']?>/<?=$entry['url']?>'">Перейти к товару</button>
     </div>
 </div>
 <div class="row" style="margin-bottom: 5px;">

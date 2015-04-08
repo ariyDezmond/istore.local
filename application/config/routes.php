@@ -81,6 +81,7 @@ $route['getCategoriesAccessorsAjax'] = 'accessors/getCategories';
 $route['news/(:any)'] = 'front/onenew/$1';
 $route['blog/(:any)'] = 'front/post/$1';
 $route['vises/(:any)'] = 'front/vises/$1';
+$route['search/(:any)'] = 'front/search/$1';
 $route['accessors/(:any)/(:any)'] = 'front/accessor/$1/$2';
 $route['accessors/(:any)'] = 'front/accessors/$1';
 $route['(:any)/(:any)/(:any)'] = 'front/good/$1/$2/$3';
@@ -88,6 +89,5 @@ $route['(:any)/(:any)'] = 'front/goods/$1/$2';
 $route['(:any)'] = 'front/subcategories/$1';
 $route['contacts'] ='front/contacts';
 $route['about'] ='front/about/$1';
-
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

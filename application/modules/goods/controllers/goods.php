@@ -65,7 +65,13 @@ class Goods extends MX_Controller {
 
     public function edit($id = null) {
         $entry = $this->model->get($id);
+        $subCategory = $this->model->getSubCategoryBy(array('id'=>$entry['subcategory_id']));
+        $category = $this->model->getCategoryBy(array('id'=>$subCategory['category_id']));
+        $entry['subcategory_name'] = $this->getSubCatNameById($entry['subcategory_id']);
+
         $data['entry'] = $entry;
+        $data['subcategory'] = $subCategory;
+        $data['category'] = $category;
         $data['module_name'] = $this->module_name;
         $data['module'] = $this->module;
         $attrs = $this->model->getGAV($id);
